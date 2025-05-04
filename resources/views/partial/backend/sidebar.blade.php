@@ -12,6 +12,8 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            {{-- {{dd($admin_side_menu)}} --}}
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.blade.php">

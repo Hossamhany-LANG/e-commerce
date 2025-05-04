@@ -8,7 +8,7 @@
         <meta name="author" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
-        <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
+        <title>@yield('title')</title>
 
         <!-- Custom fonts for this template-->
         <link href="{{asset('backend/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">

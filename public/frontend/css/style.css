@@ -2188,3 +2188,45 @@ textarea.input {
     margin-top: 10px;
   }
 }
+.custom-input {
+  max-width: 100%; /* ضمان أن العرض لا يتجاوز الإطار */
+  width: 30%; /* ضبط العرض إلى 70% من المساحة المتاحة */
+  margin: auto; /* جعله في منتصف الحاوية */
+}
+.custom-label {
+  text-align: left; /* محاذاة النص من اليسار */
+  padding-left: 615px; /* إضافة مسافة إلى الجهة اليسرى */
+}
+.main-title {
+  font-size: 48px; /* حجم النص */
+  line-height: 1.2; /* ارتفاع السطر */
+  color: #fff; /* لون النص */
+  text-align: center; /* محاذاة النص للوسط */
+  display: block; /* يجعل العنصر يظهر كسطر جديد */
+  margin: 10px 0; /* مسافات حول النص */
+}
+.custom-dropdown::after {
+  content: "▼"; /* رمز السهم */
+  font-size: 12px; /* حجم السهم */
+  margin-left: 5px; /* مسافة بين النص والسهم */
+  color: inherit; /* استخدام لون النص */
+}
+.dropdown-menu {
+  background-color: #000; /* خلفية سوداء */
+  border: none; /* إزالة الحدود */
+  opacity: 1; /* جعل الخلفية واضحة بالكامل */
+}
+
+.dropdown-menu .dropdown-item {
+  display: block; 
+  color: #fff; /* لون النص أبيض */
+  font-weight: bold; /* زيادة سمك النص لتكون بارزة */
+  background-color: transparent; /* إزالة أي تأثير خلف النص */
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #333; /* لون عند التمرير على العناصر (اختياري) */
+  color: #fff; /* اللون يبقى أبيض */
+}
+
+

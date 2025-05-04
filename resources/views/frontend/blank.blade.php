@@ -9,7 +9,7 @@
 					<div class="col-md-12">
 						<h3 class="breadcrumb-header"><b>Regular Page</b></h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
+							<li><a href="{{route('frontend.index')}}">Home</a></li>
 							<li class="active"><b>Blank</b></li>
 						</ul>
 					</div>
