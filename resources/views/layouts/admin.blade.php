@@ -18,6 +18,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- Custom styles for this template-->
         <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('backend/vendor/bootstrap-fileinput/css/fileinput.min.css')}}">
         <!-- Scripts -->
         @yield('style')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -33,7 +34,7 @@
                     @include('partial.backend.navbar')
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        @include('partial.backend.flash')
                         @yield('content')
 
                     </div>    
@@ -52,6 +53,11 @@
         <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
         <script src="{{asset('backend/js/sb-admin-2.min.js')}}"></script>
+        <script src="{{asset('backend/js/custom.js')}}"></script>
+        <script src="{{asset('backend/vendor/bootstrap-fileinput/js/plugins/piexif.min.js')}}"></script>
+        <script src="{{asset('backend/vendor/bootstrap-fileinput/js/plugins/sortable.min.js')}}"></script>
+        <script src="{{asset('backend/vendor/bootstrap-fileinput/js/fileinput.min.js')}}"></script>
+        <script src="{{asset('backend/vendor/bootstrap-fileinput/themes/fa4/theme.min.js')}}"></script>
         @yield('script')
     </body>
 </html>

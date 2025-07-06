@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;      
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;  
 
 class ProductCategory extends Model
 {
-    use Sluggable;
-    protected $guarded =[];
+    use Sluggable ,SearchableTrait;
 
-        /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
+    protected $guarded =[];
+    
     public function sluggable(): array
     {
         return [
@@ -24,7 +21,16 @@ class ProductCategory extends Model
             ]
         ];
     }
-    
+
+    protected $searchable = [
+        'columns' => [
+            'product_categories.name' => 10,
+        ],
+    ];
+    public  function status(){
+        return $this->status? 'Active' : 'Inactive';
+    }
+
     public function parent(){
         return $this->hasOne(ProductCategory::class , 'id' , 'parent_id');
     }

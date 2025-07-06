@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
-use Faker\Factory;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory;
+use App\Models\user;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Support\Str;
 
 class EntrustSeeder extends Seeder
@@ -18,7 +18,7 @@ class EntrustSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create();
+                $faker = Factory::create();
 
         $adminRole = Role::create(['name' => 'admin','display_name' => 'Administration','description' => 'Administrator','allowed_route' => 'admin',]);
         $supervisorRole = Role::create(['name' => 'supervisor','display_name' => 'Supervisor','description' => 'Supervisor','allowed_route' => 'admin',]);
@@ -113,6 +113,6 @@ class EntrustSeeder extends Seeder
         $displayProducts = Permission::create(['name' => 'display_products','display_name' => 'Show Product','route' => 'products','module' => 'products','as' => 'products.show','icon' => null ,'parent' => $manageProducts->id,'parent_original' => $manageProducts->id, 'parent_show' =>$manageProducts->id ,'sidebar_link' => '1','appear' => '0',]);
         $updateProducts = Permission::create(['name' => 'update_products','display_name' => 'Update Product','route' => 'products','module' => 'products','as' => 'products.edit','icon' => null ,'parent' => $manageProducts->id,'parent_original' => $manageProducts->id, 'parent_show' =>$manageProducts->id ,'sidebar_link' => '1','appear' => '0',]);
         $deleteProducts = Permission::create(['name' => 'delete_products','display_name' => 'Delete Product','route' => 'products','module' => 'products','as' => 'products.destroy','icon' => null ,'parent' => $manageProducts->id,'parent_original' => $manageProducts->id, 'parent_show' =>$manageProducts->id ,'sidebar_link' => '1','appear' => '0',]);
+    
     }
-
 }

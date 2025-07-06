@@ -47,6 +47,18 @@ return [
             'report' => false,
         ],
 
+        'maincategories' => [
+            'driver' => 'local',
+            'root' => public_path('assets/maincategories'),
+            'url' => env('APP_URL').'/assets/maincategories',
+            'visibility' => 'public',
+        ],
+        'vendors' => [
+            'driver' => 'local',
+            'root' => public_path('assets/vendors'),
+            'url' => env('APP_URL').'/assets/vendors',
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

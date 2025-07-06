@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable; 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Tag extends Model
 {
-    use Sluggable;
+    use Sluggable ,SearchableTrait;
     protected $guarded = [];
 
     public function sluggable(): array
@@ -19,7 +20,17 @@ class Tag extends Model
             ]
         ];
     }
-    public function products():MorphToMany{
-        return $this->morphToMany(Product::class,'taggable');
+    protected $searchable = [
+        'columns' => [
+            'tags.name' => 10,
+        ],
+    ];
+    public  function status(){
+        return $this->status? 'Active' : 'Inactive';
     }
+    public function products()
+    {
+        return $this->morphedByMany(Product::class, 'taggable');
+    }
+    
 }

@@ -6,12 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable , EntrustUserWithPermissionsTrait;
+    use HasFactory, Notifiable  ,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -56,5 +56,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFullNameAttribute(): string
     {
         return ucfirst($this->first_name). ' ' . ucfirst($this->last_name);
+    }
+    public function roles()
+{
+    return $this->belongsToMany(Role::class);
+}
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function hasPermissionTo($permission)
+    {
+        return $this->hasRole($permission);
     }
 }

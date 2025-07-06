@@ -29,18 +29,52 @@
                 Interface
             </div>
 
+            <!-- Languages -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLanguages"
+                    aria-expanded="true" aria-controls="collapseLanguages">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Languages</span> 
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Language::count()}}</span>
+                </a>
+                <div id="collapseLanguages" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Languages:</h6>
+                        <a class="collapse-item" href="{{route('admin.languages.index')}}">show all</a>
+                        <a class="collapse-item" href="{{route('admin.languages.create')}}">add a new language</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Main Categories</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Main_Category::where('translation_of' , 0)->count()}}</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">Custom Categories:</h6>
+                        <a class="collapse-item" href="{{route('admin.main_categories.index')}}">show all</a>
+                        <a class="collapse-item" href="{{route('admin.main_categories.create')}}">add a new category</a>
+                    </div>
+                </div>
+            </li>
+                        <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStores"
+                    aria-expanded="true" aria-controls="collapseStores">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Stores</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Vendor::count()}}</span>
+                </a>
+                <div id="collapseStores" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Stores:</h6>
+                        <a class="collapse-item" href="{{route('admin.vendors.index')}}">show all</a>
+                        <a class="collapse-item" href="{{route('admin.vendors.create')}}">add a new store</a>
                     </div>
                 </div>
             </li>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;  
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Product extends Model
@@ -19,6 +20,12 @@ class Product extends Model
                 'source' => 'name'
             ]
         ];
+    }
+    public function status(){
+        return $this->status ? 'Active' : 'Inactive';
+    }
+    public function featured(){
+        return $this->featured ? 'Yes' : 'No';
     }
     public function category(){
         return $this->belongsTo(ProductCategory::class, 'product_category_id' , 'id');

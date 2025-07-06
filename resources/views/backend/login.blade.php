@@ -1,4 +1,5 @@
 @extends('layouts.admin-auth')
+@section('title', 'Login')
 @section('content')
 
         <!-- Outer Row -->

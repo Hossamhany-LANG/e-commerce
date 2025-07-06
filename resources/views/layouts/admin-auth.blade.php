@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <meta name="description" content="Ecommerce Application">
     <meta name="author" content="">
-    <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
+    <title>@yield('title')</title>
 
 
     <!-- Custom fonts for this template-->

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\BackendController;
+use App\Http\Controllers\Backend\LanguagesController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
@@ -9,9 +10,9 @@ use App\Http\Controllers\Backend\TagController;
 use App\Http\Middleware\Roles;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-
-
+use App\Helpers\GeneralHelper;
+use App\Http\Controllers\Backend\MainCategoriesController;
+use App\Http\Controllers\Backend\VendorsController;
 
 Route::get('/', [FrontendController::class , 'index'])->name('frontend.index');
 Route::get('/blank', [FrontendController::class , 'blank'])->name('frontend.blank');
@@ -41,9 +42,17 @@ Route::group(['prefix' => 'admin' , 'as' =>'admin.'] , function(){
         Route::get('/forgot-password', [BackendController::class , 'forgot_password'])->name('forgot_password');
     });    
     Route::group(['middleware' => Roles::class , 'role:admin|supervisor'] , function(){
+        
+        Route::resource('languages' , LanguagesController::class);
+        Route::resource('main_categories' , MainCategoriesController::class);
+        Route::get('changestatus/{id}' ,[MainCategoriesController::class , 'changestatus'])->name('main_categories.changestatus');
+        Route::resource('vendors' , VendorsController::class);
+        Route::get('changestatus/{id}' ,[VendorsController::class , 'changestatus'])->name('vendors.changestatus');
+
         Route::get('/', [BackendController::class , 'index'])->name('index_route');
         Route::get('/index', [BackendController::class , 'index'])->name('index');
         
+        Route::post('product_categories/remove-image',[ProductCategoriesController::class,'remove_image'])->name('product_categories.remove_image');
         Route::resource('product_categories', ProductCategoriesController::class);
         Route::resource('products', ProductController::class);
         Route::resource('tags', TagController::class);
