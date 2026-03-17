@@ -1,6 +1,13 @@
 @extends('layouts.admin-auth')
+@section('title')
+    Forgot Password
+@endsection
 @section('content')
-    
+    @if (session('status'))
+    <div class="alert alert-success text-center small mb-4">
+        {{ session('status') }}
+    </div>
+@endif
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -21,7 +28,7 @@
                                     <form action="{{route('password.email')}}" method="POST" class="user">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" name="email" value="{{old('email')}}" class="form-control form-control-user" placeholder="Enter Email Address...">
+                                            <input type="email" name="email" value="{{old('email')}}" class="form-control form-control-user" placeholder="Enter Email Address..." required autofocus>
                                             @error('email')
                                             <span class="text-danger">{{$message}}</span>
                                             @enderror
@@ -32,7 +39,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{{route('admin.login')}}">Already have an account? Login!</a>
+                                        <a class="small" href="{{route('admin.login_page')}}">Already have an account? Login!</a>
                                     </div>
                                 </div>
                             </div>

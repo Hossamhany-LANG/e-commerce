@@ -18,6 +18,8 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- Custom styles for this template-->
         <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet">
+
         <link rel="stylesheet" href="{{asset('backend/vendor/bootstrap-fileinput/css/fileinput.min.css')}}">
         <!-- Scripts -->
         @yield('style')

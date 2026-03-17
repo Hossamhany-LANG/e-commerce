@@ -65,7 +65,7 @@ class VendorsController extends Controller
         //Notification::send($vendor , new VendorCreated($vendor));
         return redirect()->route('admin.vendors.index')->with(['success' => 'store saved successfully']);
     } catch (\Exception $ex) {
-        return redirect()->route('admin.vendors.index')->with(['error' => $ex->getMessage()]);
+        return redirect()->route('admin.vendors.index')->with(['error' => 'there is a problem, please try later']);
     }
 }
 
@@ -106,20 +106,30 @@ class VendorsController extends Controller
             if(!$vendors){
                 return redirect()->route('admin.vendors.index')->with(['error' => 'this vendor is not found']);
             }
-            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-                $file_path = $this->uploadimage('vendors', $request->logo);
-            } else {
-                return redirect()->route('admin.vendors.index')->with(['error' => 'Uploaded file is invalid or missing!']);
+            $file_path = $vendors->logo; 
+
+            if ($request->hasFile('logo')) {
+                if ($request->file('logo')->isValid()) {
+                    $file_path = $this->uploadimage('vendors', $request->logo);
+                } else {
+                    return redirect()->route('admin.vendors.index')->with(['error' => 'Uploaded file is invalid!']);
+                }
             }
-            $vendors->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'active' => $request->active,
-            'logo' => $file_path,
-            'password' => Hash::make($request->password),
-            ]);
+            $data = [
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'active' => $request->active,
+                'logo' => $file_path,
+            ];
+
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
+            }
+
+            $vendors->update($data);
+
             return redirect()->route('admin.vendors.index')->with(['success' => 'the store updated successfully']);
         }catch(\Exception $ex){
             return redirect()->route('admin.vendors.index')->with(['error' => 'there is a problem, please try later']);

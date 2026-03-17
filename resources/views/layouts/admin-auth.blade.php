@@ -22,9 +22,9 @@
     <!-- Laravel Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gradient-primary">
+<body style="margin: 0; padding: 0; height: 100vh; background-color: white !important;">
 
-    <div class="container">
+    <div class="container-fluid p-0 m-0" style="height: 100vh;">
         @yield('content')
     </div>
 

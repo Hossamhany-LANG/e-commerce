@@ -14,7 +14,7 @@ class ProductCategorySeeder extends Seeder
     public function run(): void
     {
         $computerdevices = ProductCategory::create(['name' => 'computerdevices' , 'cover' => 'computer.jpg' , 'status' => true , 'parent_id' =>null]);
-        ProductCategory::create(['name' => 'Laptops' , 'cover' => 'Laptops.jpg' , 'status' => true , 'parent_id' =>$computerdevices->id]);
+        ProductCategory::create(['name' => 'Labtobs' , 'cover' => 'Labtobs.jpg' , 'status' => true , 'parent_id' =>$computerdevices->id]);
         ProductCategory::create(['name' => 'Computers' , 'cover' => 'computers.jpg' , 'status' => true , 'parent_id' =>$computerdevices->id]);
         ProductCategory::create(['name' => 'Tablets' , 'cover' => 'tablets.jpg' , 'status' => true , 'parent_id' =>$computerdevices->id]);
 

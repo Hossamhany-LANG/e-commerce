@@ -14,42 +14,65 @@
                 </a>
             </div>
         </div>    
-
-        @include('backend.products.filter.filter')
-
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Image</th>
                         <th>Name</th>
-                        <th>Feature</th>
-                        <th>Quantity</th>
+                        <th>Subcategory</th>
+                        <th>category</th>
                         <th>Price</th>
-                        <th>Tags</th>
+                        <th>Discount</th>
+                        <th>Price After Discount</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
                         <th>Status</th>
-                        <th>Created at</th>
+                        <th>Image</th>
                         <th class="text-center" style="width:30px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($products as $product)
                     <tr>
-                        <td><img src="{{asset('assets/products/)'. $product->media()->first()->file_name)}}" width="60" height="60" alt="{{$product->name}}"></td>
                         <td>{{$product->name}}</td>
-                        <td>{{$product->featured()}}</td>
+                        <td>{{$product->subcategory->name}}</td>
+                        <td>{{$product->category->name}}</td>
+                        <td>EGP {{number_format($product->price,2)}}</td>
+                        <td>
+                            @if($product->discount && $product->discount->discount > 0)
+                                {{ $product->discount->discount }}%
+                            @else
+                                No Discount
+                            @endif
+                        </td>
+                        <td>
+                            @if($product->discount)
+                                EGP {{number_format($product->price - ($product->price *$product->discount->discount/100 ),2)}}
+                            @else
+                                EGP {{number_format($product->price,2)}}
+                            @endif
+                        </td>
                         <td>{{$product->quantity}}</td>
-                        <td>{{$product->price}}</td>
-                        <td>{{$product->tags->pluck('name')->join(', ')}}</td>
-                        <td>{{$product->status()}}</td>
-                        <td>{{$product->created_at}}</td>
+                        <td>{{$product->description}}</td>
+                        <td>{{$product->getActive()}}</td>
+                        <td><img width="100" height="100" src="{{$product->photo}}"></td>
                         <td>
                             <div class="btn-group btn-group-sm">
+                                <a href="{{route('admin.products.changestatus' , $product->id)}}" class="btn btn-outline-warning btn-min-width box-shadow-3 mr-1 mb-1">
+                                    @if ($product->status == 0)
+                                    Enable
+                                    @else
+                                    Disable    
+                                    @endif
+                                </a>
+                                <a href="{{ route('admin.products.discount', $product->id , $product->subcategory->id) }}" class="btn btn-warning">
+                                    </i> Set Discount
+                                </a>
                                 <a href="{{route('admin.products.edit' , $product->id)}}" class="btn btn-primary">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="javascript:void(0);" 
-                                onclick="if(confirm('Are you sure tyou want to delete this record?')){document.getElementById('delete-product-{{$product->id}}').submit();}else{return false;}"
+                                onclick="if(confirm('Are you sure you want to delete this record?')){document.getElementById('delete-product-{{$product->id}}').submit();}else{return false;}"
                                     class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
@@ -72,6 +95,11 @@
                             <div class="float-right">
                                 {!! $products->appends(request()->all())->links()!!}
                             </div>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.allproducts.discount') }}" class="btn btn-warning">
+                                </i> Set Discount For All Products
+                            </a>
                         </td>
                     </tr>
                 </tfoot>

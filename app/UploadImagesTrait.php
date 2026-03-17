@@ -11,7 +11,7 @@ trait UploadImagesTrait
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0775, true);
         }
-        $filename = time() . '_' . $image->getClientOriginalName(); //لمنع التكرار او استبدال الصور السابقه
+        $filename =$image->getClientOriginalName(); //لمنع التكرار او استبدال الصور السابقه
         $image->move($destinationPath, $filename);
         
 

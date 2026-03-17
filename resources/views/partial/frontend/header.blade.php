@@ -1,14 +1,22 @@
-        		<!-- HEADER -->
+<!-- HEADER -->
 		<header id="header">
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+						<li style="color: white; list-style: none; display: inline-block; margin-right: 15px;">
+							<i class="fa fa-phone"></i><b>{{ \App\Models\AboutUs::first()->phone ?? '' }}</b>
+						</li>
+						<li style="color: white; list-style: none; display: inline-block; margin-right: 15px;">
+							<i class="fa fa-envelope-o"></i><b>{{ \App\Models\AboutUs::first()->email ?? '' }}</b>
+						</li>
+						<li style="color: white; list-style: none; display: inline-block;">
+							<i class="fa fa-map-marker"></i><b>{{ \App\Models\AboutUs::first()->address ?? '' }}</b>
+						</li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+						<li style="color: rgb(236, 219, 219); list-style: none; display: inline-block;">
+							<i class="fa fa-dollar"></i><b>USA</b>
+						</li>	
 						@guest
 						<li class="nav-item">
 							<a class="nav-link" href="{{route('login')}}">
@@ -27,7 +35,7 @@
 								Welcome, {{ auth()->user()->full_name }}
 							</a>							
 							<div class="dropdown-menu mt-3" aria-labelledby="authDropdown">
-								<a href="#" class="dropdown-item border-0 ">My profile</a>
+								<a href="{{route('profile.show')}}" class="dropdown-item border-0 ">My profile</a>
 								<a href="javascript:void(0);" class="dropdown-item border-0"
 								onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
 								>Logout</a>
@@ -46,61 +54,81 @@
 						<div class="col-md-3">
 							<div >
 								<span class="main-title font-weight-bold text-uppercase text-white">
-									<b>{{ config('app.name') }}</b>
+									<b>{{ \App\Models\AboutUs::first()->pagename ?? '' }}</b>
 								</span>
 								
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="2">Category 02</option>
-									</select>
-									<input class="input" placeholder="Search here">
+								<form action="{{ route('search') }}" method="GET">
+									<input class="input" type="text" name="query" placeholder="Search for products...">
 									<button class="search-btn">Search</button>
 								</form>
 							</div>
 						</div>
+
+						@php
+								$wishlist_Count = App\Models\WishList::forCurrentUser()->count();
+						@endphp
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
 								<div>
-									<a href="#">
+									<a href="{{route('wishlist')}}">
 										<i class="fa fa-heart-o"></i>
 										<span>Your Wishlist</span>
-										<div class="qty">2</div>
+										<div class="qty">{{$wishlist_Count}}</div>
 									</a>
 								</div>
+								<div>
+									<a href="{{ route('compare.index') }}"> <i class="fa fa-exchange"></i> 
+										<span>Compare</span> 
+										<div class="qty">{{ App\Models\Comparison::forCurrentUser()->count() }}</div> 
+									</a> 
+								</div>
+								@php
+										$carts = App\Models\Cart::forCurrentUser()->get();
+								@endphp
 								<div class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<div class="qty">{{$carts->count()}}</div>
 									</a>
 									<div class="cart-dropdown">
+										@foreach ($carts as $cart)
 										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="{{ asset('frontend/img/product01.png') }}" alt="Product">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">Product Name</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span> $980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+											<div class="cart-product-widget">
+											<div class="cart-product-preview">
+												<img src="{{ $cart->product->photo }}" alt="Product">
 											</div>
+
+											<div class="cart-product-body">
+												<h3 class="product-name"><a href="{{ route('frontend.product', $cart->product->id) }}">{{ $cart->product->name }}</a></h3>
+												<h4 class="product-price"><span class="qty">{{ $cart->quantity }} *</span> ${{number_format($cart->product->price,2)}}</h4>
+											</div>
+
+											</div>
+
 										</div>
+										<hr>
+										@endforeach
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<small>{{$carts->count()}} Item(s) selected</small>
+											<h5>SUBTOTAL: ${{ number_format($carts->sum(function($cart) {
+												return $cart->product->price * $cart->quantity;})) }}</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="{{route('frontend.cart')}}">View Cart</a>
+											<a href="{{route('frontend.checkout')}}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
+								</div>
+								<div>
+									<a href="{{ route('frontend.store') }}">
+										<i class="fa fa-shopping-bag"></i>
+										<span>Shop</span>
+									</a>
 								</div>
 								<div class="menu-toggle">
 									<a href="#">

@@ -2,11 +2,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.blade.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route("admin.index_route")}}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Home(Admin)</div>
             </a>
 
             <!-- Divider -->
@@ -16,9 +16,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.blade.php">
+                <a class="nav-link" href="{{route("frontend.index")}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Home(TechZone)</span></a>
             </li>
 
             <!-- Divider -->
@@ -48,13 +48,13 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsemaincategories"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-table"></i>
                     <span>Main Categories</span>
                     <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Main_Category::where('translation_of' , 0)->count()}}</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapsemaincategories" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Categories:</h6>
                         <a class="collapse-item" href="{{route('admin.main_categories.index')}}">show all</a>
@@ -62,11 +62,45 @@
                     </div>
                 </div>
             </li>
-                        <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesubcategories"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>SubCategories</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\SubCategory::count()}}</span>
+                </a>
+                <div id="collapsesubcategories" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom SubCategories:</h6>
+                        <a class="collapse-item" href="{{route('admin.subcategories.index')}}">show all</a>
+                        <a class="collapse-item" href="{{route('admin.subcategories.create')}}">add a new category</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts"
+                    aria-expanded="true" aria-controls="collapseStores">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Products</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
+                </a>
+                <div id="collapseProducts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Products:</h6>
+                        <a class="collapse-item" href="{{route('admin.products.index')}}">show all</a>
+                        <a class="collapse-item" href="{{route('admin.products.create')}}">add a new product</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStores"
                     aria-expanded="true" aria-controls="collapseStores">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-folder"></i>
                     <span>Stores</span>
                     <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Vendor::count()}}</span>
                 </a>
@@ -79,21 +113,68 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Informations Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInformations"
+                    aria-expanded="true" aria-controls="collapseInformations">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Informations</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Aboutus::count()}}</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseInformations" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Custom Informations:</h6>
+                        <a class="collapse-item" href="{{route('admin.about-us.index')}}">show informations</a>
+                        <a class="collapse-item" href="{{route('admin.about-us.create')}}">add information</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Orders Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
+                    aria-expanded="true" aria-controls="collapseOrders">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Orders Management</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\Order::count()}}</span>
+                </a>
+                <div id="collapseOrders" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Orders:</h6>
+                        <a class="collapse-item" href="{{route('showorders')}}">show all</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - ReturnOrders Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReturnOrders"
+                    aria-expanded="true" aria-controls="collapseReturnOrders">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>ReturnOrders Management</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\ReturnOrder::count()}}</span>
+                </a>
+                <div id="collapseReturnOrders" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom ReturnOrders:</h6>
+                        <a class="collapse-item" href="{{route('show-return-orders')}}">show all</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - ClientsMessages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ClientsMessages"
+                    aria-expanded="true" aria-controls="ClientsMessages">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Clients Messages</span>
+                    <span  class="badge badge badge-info badge-pill float-right mr-2">{{App\Models\ContactUs::count()}}</span>
+                </a>
+                <div id="ClientsMessages" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom ClientsMessages:</h6>
+                        <a class="collapse-item" href="{{route('show-all-clients-messages')}}">show all</a>
                     </div>
                 </div>
             </li>
@@ -116,9 +197,10 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.blade.php">Login</a>
-                        <a class="collapse-item" href="register.blade.php">Register</a>
-                        <a class="collapse-item" href="forgot-password.blade.php">Forgot Password</a>
+                        <a class="collapse-item" href="{{route('admin.adminprofile.show')}}">Admin Profile</a>
+                        <a class="collapse-item" href="{{route("admin.logout")}}">Login</a>
+                        <a class="collapse-item" href="">Register</a>
+                        <a class="collapse-item" href="{{route("admin.forgot_password")}}">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
@@ -127,34 +209,6 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="{{asset('backend/img/undraw_rocket.svg')}}" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
-
         </ul>
         <!-- End of Sidebar -->
+        

@@ -9,11 +9,21 @@
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
 								<h3 class="footer-title"><b>About Us</b></h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+								@php
+									$aboutus =\App\Models\AboutUs::first();
+								@endphp
+								<p>{{ $aboutus->description ?? '' }}</p>
+								<br>
 								<ul class="footer-links">
-									<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-									<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-									<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+									<li style="color: rgb(174, 164, 164); list-style: none;">
+										<i class="fa fa-map-marker"></i><b>{{ $aboutus->address ?? '' }}</b>
+									</li>									
+									<li style="color: rgb(174, 164, 164); list-style: none; margin-right: 15px;">
+										<i class="fa fa-phone"></i><b>{{ $aboutus->phone ?? '' }}</b>
+									</li>
+									<li style="color: rgb(174, 164, 164); list-style: none; margin-right: 15px;">
+										<i class="fa fa-envelope-o"></i><b>{{ $aboutus->email ?? '' }}</b>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -22,26 +32,11 @@
 							<div class="footer">
 								<h3 class="footer-title"><b>Categories</b></h3>
 								<ul class="footer-links">
-									<li><a href="#">Hot deals</a></li>
-									<li><a href="#">Laptops</a></li>
-									<li><a href="#">Smartphones</a></li>
-									<li><a href="#">Cameras</a></li>
-									<li><a href="#">Accessories</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<div class="clearfix visible-xs"></div>
-
-						<div class="col-md-3 col-xs-6">
-							<div class="footer">
-								<h3 class="footer-title"><b>Information</b></h3>
-								<ul class="footer-links">
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Contact Us</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Orders and Returns</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
+									<li><a href="{{route('frontend.computerdevices')}}">ComputerDevices</a></li>
+									<li><a href="{{route('frontend.smartphones')}}">SmartpPhones</a></li>
+									<li><a href="{{route('frontend.cameras')}}">Cameras</a></li>
+									<li><a href="{{route('frontend.homeelectronics')}}">HomeElectronics</a></li>
+									<li><a href="{{route('frontend.accessories')}}">Accessories</a></li>
 								</ul>
 							</div>
 						</div>
@@ -50,14 +45,30 @@
 							<div class="footer">
 								<h3 class="footer-title"><b>Service</b></h3>
 								<ul class="footer-links">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">View Cart</a></li>
-									<li><a href="#">Wishlist</a></li>
-									<li><a href="#">Track My Order</a></li>
-									<li><a href="#">Help</a></li>
+									<li><a href="{{route('profile.show')}}">My Account</a></li>
+									<li><a href="{{route('frontend.cart')}}">View Cart</a></li>
+									<li><a href="{{route('wishlist')}}">Wishlist</a></li>
+									<li><a href="{{route('compare.index')}}">Compare</a></li>
+									<li><a href="{{route('frontend.store')}}">Store</a></li>
 								</ul>
 							</div>
 						</div>
+						<div class="clearfix visible-xs"></div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title"><b>Information</b></h3>
+								<ul class="footer-links">
+									<li><a href="{{route('help')}}">Help</a></li>
+									<li><a href="{{route('aboutus.page')}}">About Us</a></li>
+									<li><a href="{{route('contactus')}}">Contact Us</a></li>
+									<li><a href="{{route('privacy_policy')}}">Privacy Policy</a></li>
+									<li><a href="{{route('orders_and_returns')}}">Orders & Returns</a></li>
+									<li><a href="{{route('terms_and_conditions')}}">Terms & Conditions</a></li>
+								</ul>
+							</div>
+						</div>
+
 					</div>
 					<!-- /row -->
 				</div>
@@ -78,9 +89,6 @@
 								<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
 								<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
 							</ul>
-							<span class="copyright">
-								<a target="_blank" href="https://www.templateshub.net">Templates Hub</a>
-						   </span>
 						</div>
 					</div>
 						<!-- /row -->
@@ -90,7 +98,6 @@
 			<!-- /bottom footer -->
 		</footer>
 		<!-- /FOOTER -->
-       
             <!-- Footer (Optional, if needed) -->
             <footer class="bg-gray-200 text-center py-4">
                 <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>

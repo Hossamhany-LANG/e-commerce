@@ -37,3 +37,6 @@ class Vendor extends Model
         return $this->belongsTo(Main_Category::class, 'category_id', 'id' );
     }
 }
+
+
+

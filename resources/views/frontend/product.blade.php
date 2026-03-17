@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', "{$product->name}")
 @section('content')
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -8,11 +9,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
-							<li class="active">Product name goes here</li>
+							<li class="active">{{$product->category->name}}</li>
+							<li class="active">{{$product->subcategory->name}}</li>
 						</ul>
 					</div>
 				</div>
@@ -29,115 +27,62 @@
 				<!-- row -->
 				<div class="row">
 					<!-- Product main img -->
-					<div class="col-md-5 col-md-push-2">
+					<div class="col-md-6">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="frontend/img/product01.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product03.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product06.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product08.png" alt="">
+								<img src="{{$product->photo}}"alt="{{$product->name}}">
 							</div>
 						</div>
 					</div>
 					<!-- /Product main img -->
 
-					<!-- Product thumb imgs -->
-					<div class="col-md-2  col-md-pull-5">
-						<div id="product-imgs">
-							<div class="product-preview">
-								<img src="frontend/img/product01.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product03.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product06.png" alt="">
-							</div>
-
-							<div class="product-preview">
-								<img src="frontend/img/product08.png" alt="">
-							</div>
-						</div>
-					</div>
-					<!-- /Product thumb imgs -->
-
 					<!-- Product details -->
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<div class="product-details">
-							<h2 class="product-name">product name goes here</h2>
+							<h2 class="product-name">{{$product->name}}</h2>
 							<div>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<a class="review-link" href="#">10 Review(s) | Add your review</a>
-							</div>
-							<div>
-								<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
-								<span class="product-available">In Stock</span>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-							<div class="product-options">
-								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
-									</select>
-								</label>
-								<label>
-									Color
-									<select class="input-select">
-										<option value="0">Red</option>
-									</select>
-								</label>
+								@if ($product->discount && $product->discount->discount > 0)
+									<h3 class="product-price">${{number_format($product->price - ($product->discount->discount/100 * $product->price) , 2)}}<del class="product-old-price">${{number_format($product->price,2)}}</del></h3>
+								@else
+									<h3 class="product-price">${{number_format($product->price , 2)}}</h3>
+								@endif
 							</div>
 
 							<div class="add-to-cart">
 								<div class="qty-label">
-									Qty
+									Quantity
 									<div class="input-number">
-										<input type="number">
+										<input type="number" id="product-qty" value="1" min="1">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<br>
+								<br>
+								<button class="single-product-add-to-cart" data-product-id="{{ $product->id }}">
+									<i class="fa fa-shopping-cart"></i> add to cart
+								</button>
+								<br>
+								<br>
+								<button class="add-to-wishlist btn-wishlist-custom" data-product-id="{{$product->id}}">
+								<i class="fa fa-heart-o"></i>
+								<span class="tooltipp">add to wishlist</span>
+							</button>
+							<br>
+							<br>
+							<button class="add-to-compare btn-compare-custom" data-id="{{$product->id}}">
+								<i class="fa fa-exchange"></i>
+								<span class="tooltipp">add to compare</span>
+							</button>
 							</div>
-
-							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
-							</ul>
-
 							<ul class="product-links">
-								<li>Category:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
+								<li><b>Category :</b></li>
+								<li><b>{{$product->category->name}}</b></li>
 							</ul>
-
 							<ul class="product-links">
-								<li>Share:</li>
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+								<li><b>SubCategory :</b></li>
+								<li><b>{{$product->subcategory->name}}</b></li>
 							</ul>
-
 						</div>
 					</div>
 					<!-- /Product details -->
@@ -148,8 +93,7 @@
 							<!-- product tab nav -->
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab2">Details</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+								<li><a data-toggle="tab" href="#tab2">Reviews</a></li>
 							</ul>
 							<!-- /product tab nav -->
 
@@ -159,104 +103,38 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											<p>{{$product->description}}</p>
 										</div>
 									</div>
 								</div>
 								<!-- /tab1  -->
-
+								
 								<!-- tab2  -->
 								<div id="tab2" class="tab-pane fade in">
-									<div class="row">
-										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-										</div>
-									</div>
-								</div>
-								<!-- /tab2  -->
-
-								<!-- tab3  -->
-								<div id="tab3" class="tab-pane fade in">
 									<div class="row">
 										<!-- Rating -->
 										<div class="col-md-3">
 											<div id="rating">
 												<div class="rating-avg">
-													<span>4.5</span>
+													<span>{{number_format($average , 1)}}</span>
 													<div class="rating-stars">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-o"></i>
+														@for ($i = 1; $i <= 5; $i++)
+															<i class="fa {{ $i <= round($average) ? 'fa-star' : 'fa-star-o' }}"></i>
+														@endfor
 													</div>
 												</div>
 												<ul class="rating">
+													@foreach ($reviews as $review)
 													<li>
+														<span class="sum"><b>{{$review->rating}}</b></span>
 														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
+															@for ($i = 1; $i <= 5; $i++)
+																<i class="fa {{ $i <= $review->rating ? 'fa-star' : 'fa-star-o' }}"></i>
+															@endfor
 														</div>
-														<div class="rating-progress">
-															<div style="width: 80%;"></div>
-														</div>
-														<span class="sum">3</span>
+														
 													</li>
-													<li>
-														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o"></i>
-														</div>
-														<div class="rating-progress">
-															<div style="width: 60%;"></div>
-														</div>
-														<span class="sum">2</span>
-													</li>
-													<li>
-														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-														</div>
-														<div class="rating-progress">
-															<div></div>
-														</div>
-														<span class="sum">0</span>
-													</li>
-													<li>
-														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-														</div>
-														<div class="rating-progress">
-															<div></div>
-														</div>
-														<span class="sum">0</span>
-													</li>
-													<li>
-														<div class="rating-stars">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-															<i class="fa fa-star-o"></i>
-														</div>
-														<div class="rating-progress">
-															<div></div>
-														</div>
-														<span class="sum">0</span>
-													</li>
+													@endforeach
 												</ul>
 											</div>
 										</div>
@@ -266,62 +144,28 @@
 										<div class="col-md-6">
 											<div id="reviews">
 												<ul class="reviews">
+													@foreach ($reviews as $review)
 													<li>
 														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
+															<h5 class="name">{{$review->name}}</h5>
+															<p class="date">{{$review->created_at}}</p>
+														<div class="review-rating">
+															@for ($i = 1; $i <= 5; $i++)
+																<i class="fa {{ $i <= $review->rating ? 'fa-star' : 'fa-star-o' }}"></i>
+															@endfor
+														</div>
+
 														</div>
 														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+															<p>{{$review->content}}</p>
 														</div>
 													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
+													@endforeach
 												</ul>
-												<ul class="reviews-pagination">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">4</a></li>
-													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-												</ul>
+												<div class="text-center">
+													{{ $reviews->links() }}
+												</div>
+
 											</div>
 										</div>
 										<!-- /Reviews -->
@@ -329,18 +173,19 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form class="review-form" action="{{route('products.productreviews' , $product->id)}}" method="POST">
+													@csrf
+													<input class="input" type="text" placeholder="Your Name" name="name" required>
+													<input class="input" type="email" placeholder="Your Email" name="email" required>
+													<textarea class="input" placeholder="Your Review" name="content"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+															<input id="star5" name="rating" value="5" type="radio" required><label for="star5"></label>
+															<input id="star4" name="rating" value="4" type="radio" required><label for="star4"></label>
+															<input id="star3" name="rating" value="3" type="radio" required><label for="star3"></label>
+															<input id="star2" name="rating" value="2" type="radio" required><label for="star2"></label>
+															<input id="star1" name="rating" value="1" type="radio" required><label for="star1"></label>
 														</div>
 													</div>
 													<button class="primary-btn">Submit</button>
@@ -350,7 +195,7 @@
 										<!-- /Review Form -->
 									</div>
 								</div>
-								<!-- /tab3  -->
+								<!-- /tab2  -->
 							</div>
 							<!-- /product tab content  -->
 						</div>
@@ -372,168 +217,117 @@
 
 					<div class="col-md-12">
 						<div class="section-title text-center">
-							<h3 class="title">Related Products</h3>
+							<h3 class="title"><b>Related Products</b></h3>
 						</div>
 					</div>
-
+					@foreach ($Related_Products as $Related_Product)
+					@if($Related_Product->count())	
 					<!-- product -->
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="frontend/img/product01.png" alt="">
+								<img src="{{$Related_Product->photo}}" alt="">
 								<div class="product-label">
-									<span class="sale">-30%</span>
+									@if ($Related_Product->discount && $Related_Product->discount->discount > 0)
+									<span class="sale">-{{$Related_Product->discount->discount}}%</span>
+									@endif
 								</div>
 							</div>
 							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+								<p class="product-category">{{$Related_Product->subcategory->name}}</p>
+								<h3 class="product-name"><a href="{{route('frontend.product',$Related_Product->id)}}">{{$Related_Product->name}}</a></h3>
+								@if ($Related_Product->discount && $Related_Product->discount->discount > 0)
+									<h4 class="product-price">${{number_format($Related_Product->price - ($Related_Product->price * $Related_Product->discount->discount/100),2)}}<del class="product-old-price">${{number_format($Related_Product->price,2)}}</del></h4>
+								@else
+									<h4 class="product-price">${{number_format($Related_Product->price)}}</h4>
+								@endif
 								<div class="product-rating">
 								</div>
 								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+									<button class="add-to-wishlist product_fav" data-product-id="{{$Related_Product->id}}">
+										<i class="fa fa-heart-o"></i>
+										<span class="tooltipp">add to wishlist</span>
+									</button>
+									<button class="add-to-compare" data-id="{{$Related_Product->id}}">
+										<i class="fa fa-exchange"></i>
+										<span class="tooltipp">add to compare</span>
+									</button>
+									<button onclick="window.location.href='{{ route('frontend.product', $Related_Product->id) }}'" class="quick-view">
+										<i class="fa fa-eye"></i>
+										<span class="tooltipp">quick view</span>
+									</button>
 								</div>
 							</div>
 							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<button class="add-to-cart-btn" data-id="{{$Related_Product->id}}">
+									<i class="fa fa-shopping-cart"></i> add to cart
+								</button>
 							</div>
 						</div>
 					</div>
 					<!-- /product -->
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="frontend/img/product02.png" alt="">
-								<div class="product-label">
-									<span class="new">NEW</span>
-								</div>
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
-					<div class="clearfix visible-sm visible-xs"></div>
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="frontend/img/product03.png" alt="">
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
-					<!-- product -->
-					<div class="col-md-3 col-xs-6">
-						<div class="product">
-							<div class="product-img">
-								<img src="frontend/img/product04.png" alt="">
-							</div>
-							<div class="product-body">
-								<p class="product-category">Category</p>
-								<h3 class="product-name"><a href="#">product name goes here</a></h3>
-								<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								<div class="product-rating">
-								</div>
-								<div class="product-btns">
-									<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-									<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-									<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								</div>
-							</div>
-							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-						</div>
-					</div>
-					<!-- /product -->
-
+					@endif
+					@endforeach
 				</div>
 				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
 		<!-- /Section -->
-
-		<!-- NEWSLETTER -->
-		<div id="newsletter" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="newsletter">
-							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
-							<form>
-								<input class="input" type="email" placeholder="Enter Your Email">
-								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-							</form>
-							<ul class="newsletter-follow">
-								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-instagram"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-pinterest"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /NEWSLETTER -->
 @endsection		
+@section('scripts')
+@section('scripts')
+<script>
+$(document).ready(function() {
+    // نستخدم الكلاس الجديد لمنع التداخل مع كود الـ Layout
+    $(document).on('click', '.single-product-add-to-cart', function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // أهم سطر: يمنع تنفيذ أي كود آخر مرتبط بنفس الضغطة
+
+        let button = $(this);
+        let productId = button.data('product-id');
+        let quantity = $('#product-qty').val() || 1;
+
+        $.ajax({
+            url: "{{ route('cart.store') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                product_id: productId,
+                quantity: quantity
+            },
+            beforeSend: function() {
+                button.prop('disabled', true);
+            },
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        position: 'center',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    
+                    // إذا كان لديك فانكشن لتحديث عداد السلة في الهيدر استدعها هنا
+                    // if(typeof updateCartHeader === 'function') updateCartHeader();
+                }
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: xhr.responseJSON?.message || "Something went wrong!",
+                });
+            },
+            complete: function() {
+                button.prop('disabled', false);
+            }
+        });
+    });
+});
+</script>
+@endsection
+
+@endsection

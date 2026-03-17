@@ -12,10 +12,13 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a href="javascript:void(0);" class="dropdown-item border-0"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                    >Logout</a>
-                    <form action="{{route('logout')}}" method="POST" id="logout-form" class="d-none">
+                    
+                    <button type="button" class="btn btn-primary" 
+                            onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
+                        Logout
+                    </button>
+
+                    <form id="admin-logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 </div>

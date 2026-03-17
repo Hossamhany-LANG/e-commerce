@@ -4,8 +4,16 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex">
-            <h6 class="m-0 font-weight-bold text-primary">All Vendors</h6>
-        </div>    
+            <h6 class="m-0 font-weight-bold text-primary">Stores</h6>
+            <div class="ml-auto">
+                <a href="{{route('admin.vendors.create')}}" class="btn btn-primary">
+                <span class="icon text-white-50">
+                    <i class="fa fa-plus"></i>
+                </span>
+                <span class="text">Add New Store</span>
+                </a>
+            </div>
+        </div>   
 
         <div class="table-responsive">
             <table class="table table-hover">
@@ -62,7 +70,7 @@
                     <tr>
                         <td colspan="6">
                             <div class="float-right">
-                                {{-- {!! $main_categories->appends(request()->all())->links()!!} --}}
+                                {!! $vendors->appends(request()->all())->links()!!}
                             </div>
                         </td>
                     </tr>

@@ -39,6 +39,33 @@ class LoginController extends Controller
             return $this->redirectTo = Auth::user()->roles->first()->allowed_route . '/index';
         }
     }
+    public function loginpage(){
+        return view('backend.login'); 
+    }
+
+    public function logout(\Illuminate\Http\Request $request){
+        Auth::guard('admin')->logout();             
+        $request->session()->invalidate();     
+        $request->session()->regenerateToken();
+
+        return redirect('/login');            
+    }
+    public function admin_logout(\Illuminate\Http\Request $request)
+{
+    Auth::guard('admin')->logout();
+    Auth::guard('web')->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('admin.login_page')
+        ->withHeaders([
+            'Cache-Control' => 'no-cache, no-store, max-age=0, must-revalidate',
+            'Pragma'        => 'no-cache',
+            'Expires'       => 'Sat, 01 Jan 1990 00:00:00 GMT',
+        ]);
+}
+
     /**
      * Create a new controller instance.
      *
@@ -46,7 +73,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'admin_logout']);
         $this->middleware('auth')->only('logout');
     }
 

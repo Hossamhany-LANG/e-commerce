@@ -96,7 +96,7 @@ Register
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="password_confirmation" class="text-small text-uppercase custom-label">Password</label>
+                                    <label for="password_confirmation" class="text-small text-uppercase custom-label">Confirm Password</label>
                                     <input id="password_confirmation" type="password" class="form-control form-control-lg custom-input" name="password_confirmation" placeholder="Re type your Password">        
                                         @error('password_confirmation')
                                             <span class="text-danger custom-label">

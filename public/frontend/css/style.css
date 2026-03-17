@@ -496,6 +496,9 @@ textarea.input {
 .header-ctn {
   float: right;
   padding: 15px 0px;
+  display: flex; 
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .header-ctn>div {
@@ -1079,7 +1082,9 @@ textarea.input {
 \*----------------------------*/
 
 .product-widget {
-  position: relative;
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 15px;
 }
 
 .product-widget+.product-widget {
@@ -1088,9 +1093,8 @@ textarea.input {
 
 .product-widget .product-img {
   position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 60px;
+  width: 60px; 
+  margin-right: 10px;
 }
 
 .product-widget .product-img>img {
@@ -2229,4 +2233,118 @@ textarea.input {
   color: #fff; /* اللون يبقى أبيض */
 }
 
+.shop img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
 
+
+.cart-product-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cart-product-preview img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+
+.cart-product-body {
+  flex-grow: 1;
+}
+.product-details .product-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    list-style: none;
+    padding: 0;
+    justify-content: flex-start; /* بيخليهم مرصوصين صح على الشمال */
+}
+.btn-wishlist-custom {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-compare-custom {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#product-main-img .product-preview img {
+    height: 450px !important;
+    object-fit: contain !important;
+}
+.product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px; 
+}
+.main-nav {
+    display: flex !important;
+    justify-content: center;
+    width: 100%;
+}
+/* Custom Red Button for Single Product Page */
+.single-product-add-to-cart {
+    background-color: #D10024;
+    color: #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 40px;
+    transition: 0.2s all;
+    display: inline-block;
+}
+
+.single-product-add-to-cart:hover {
+    background-color: #AD001D;
+    color: #FFF;
+}
+.login-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
+    background-color: #ffffff;
+    position: relative;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 600px; 
+    margin: 0 auto !important; 
+    float: none !important;
+}
+
+.custom-card-login {
+    border-radius: 12px;
+    border: 1px solid #ebebeb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    background: #fff;
+    padding: 50px; 
+    text-align: left;
+}
+
+.login-box .site-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #D10024;
+    margin-bottom: 10px;
+    text-align: center; 
+}

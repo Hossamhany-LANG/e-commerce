@@ -14,9 +14,6 @@
                 </a>
             </div>
         </div>    
-
-        @include('backend.tags.filter.filter')
-
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -42,7 +39,7 @@
                                 </a>
                                 <a href="javascript:void(0);" 
                                 onclick="if(confirm('Are you sure tyou want to delete this record?')){document.getElementById('delete-tag-{{$tag->id}}').submit();}else{return false;}"
-                                     class="btn btn-danger">
+                                    class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>

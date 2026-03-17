@@ -53,10 +53,34 @@ return [
             'url' => env('APP_URL').'/assets/maincategories',
             'visibility' => 'public',
         ],
+        'subcategories' => [
+            'driver' => 'local',
+            'root' => public_path('assets/subcategories'),
+            'url' => env('APP_URL').'/assets/subcategories',
+            'visibility' => 'public',
+        ],
         'vendors' => [
             'driver' => 'local',
             'root' => public_path('assets/vendors'),
             'url' => env('APP_URL').'/assets/vendors',
+            'visibility' => 'public',
+        ],
+        'products' => [
+            'driver' => 'local',
+            'root' => public_path('assets/products'),
+            'url' => env('APP_URL').'/assets/products',
+            'visibility' => 'public',
+        ],
+        'informations' => [
+            'driver' => 'local',
+            'root' => public_path('assets/informations'),
+            'url' => env('APP_URL').'/assets/informations',
+            'visibility' => 'public',
+        ],
+        'returnproducts' => [
+            'driver' => 'local',
+            'root' => public_path('assets/returnproducts'),
+            'url' => env('APP_URL').'/assets/returnproducts',
             'visibility' => 'public',
         ],
         's3' => [

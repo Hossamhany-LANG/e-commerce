@@ -16,27 +16,28 @@ class Roles
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
+    public function handle(Request $request, Closure $next): Response{
+        if ($request->is('admin/login') || $request->is('login')) {
+            return $next($request);
+        }
+
         $routeName = Route::getFacadeRoot()->current()->uri();
-        $route = explode('/' , $routeName);
+        $route = explode('/', $routeName);
         $roleRoutes = Role::distinct()->whereNotNull('allowed_route')->pluck('allowed_route')->toArray();
 
-        if(Auth::check()){
-            if(!in_array($route[0] , $roleRoutes)){
-                return $next($request);
-            }else{
-                if($route[0] != Auth::user()->roles[0]->allowed_route){
-                    $path = $route[0] == Auth::user()->roles[0]->allowed_route ? $route[0]. '.login' : ''  . Auth::user()->roles[0]->allowed_route.'.index';
-                    return redirect()->route($path);
-                }else{
-                    return $next($request);
-                }
+        if (Auth::check()) {
+            $userRole = Auth::user()->roles->first()->allowed_route ?? null;
+
+            if (in_array($route[0], $roleRoutes) && $route[0] != $userRole) {
+                return redirect()->route($userRole . '.index');
             }
-        }else{
-            $routeDestination = in_array($route[0] , $roleRoutes) ? $route[0].'.login' : 'login';
-            $path = $route[0] != '' ? $routeDestination : Auth::user()->roles[0]->allowed_route.'.index';
-            return redirect()->route($path);
+            return $next($request);
         }
+
+        if (in_array($route[0], $roleRoutes)) {
+            return redirect()->route('admin.login_page');
+        }
+
+        return $next($request);
     }
 }

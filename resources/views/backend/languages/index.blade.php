@@ -19,15 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    @forelse ($languages as $language)
+                    @if ($languages)
+                    @foreach ($languages as $language)
                     <tr>
                         <td>{{$language->name}}</td>
                         <td>{{$language->abbr}}</td>
                         <td>{{$language->direction}}</td>
                         <td>{{$language->getActive()}}</td>
-
-
                         <td>
                             <div class="btn-group btn-group-sm">
                                 <a href="{{route('admin.languages.edit' , $language->id)}}" class="btn btn-primary">
@@ -45,11 +43,12 @@
                             </form>
                         </td>
                     </tr>
-                    @empty
+                    @endforeach
+                    @else
                     <tr>
                         <td colspan="6" class="text-center"> No languages Found</td>
                     </tr>
-                    @endforelse
+                    @endif
                 </tbody>
                 <tfoot>
                     <tr>

@@ -24,7 +24,7 @@ class MainCategoriesController extends Controller
     public function index()
     {
         $default_lang = Config::get('app.locale');
-        $main_categories = Main_Category::where('translation_language' , $default_lang)->get();
+        $main_categories = Main_Category::where('translation_language' , $default_lang)->paginate(10);
         return view('backend.main-categories.index' , compact('main_categories'));
     }
 
@@ -117,23 +117,23 @@ class MainCategoriesController extends Controller
     public function update(MainCategoriesRequest $request , $id)
     {
         try{
-        $main_categories = Main_Category::find($id);
-        if(!$main_categories){
-            return redirect()->route('admin.main_categories.index')->with(['error' => 'this category is not found']);
-        }
-        $category = array_values($request->categories)[0];
-        $file_path = "";
-        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-            $file_path = $this->uploadimage('maincategories' ,$request->photo);
-        } 
-        // else {
-        //     return redirect()->back()->withErrors(['error' => 'Uploaded file is invalid or missing!']);
-        // }
-        Main_Category::where('id' ,$id)->update([
-            'name' =>$category['name'],
-            'active' =>$category['active'],
-            'photo' => $file_path,
-        ]);
+            $main_categories = Main_Category::find($id);
+            if(!$main_categories){
+                return redirect()->route('admin.main_categories.index')->with(['error' => 'this category is not found']);
+            }
+            $category = array_values($request->categories)[0];
+            $file_path = "";
+            if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+                $file_path = $this->uploadimage('maincategories' ,$request->photo);
+            } 
+            // else {
+            //     return redirect()->back()->withErrors(['error' => 'Uploaded file is invalid or missing!']);
+            // }
+            Main_Category::where('id' ,$id)->update([
+                'name' =>$category['name'],
+                'active' =>$category['active'],
+                'photo' => $file_path,
+            ]);
             return redirect()->route('admin.main_categories.index')->with(['success' => 'the category updated successfully']);
         }catch(\Exception $ex){
             return redirect()->route('admin.main_categories.index')->with(['error' => 'editing category failed ,please try later']);
@@ -158,13 +158,12 @@ class MainCategoriesController extends Controller
             if(isset($vendors) && $vendors->count() > 0){
                 return redirect()->route('admin.main_categories.index')->with(['error' => 'this category can not be deleted']);
             }else{
-            $photo = Str::after($main_categories->photo, 'assets/'); // assets نجيب اسم الصوره من بعد كلمه  
-            $photoPath = public_path('assets/' . $photo);// عشان نجيب مسار الصوره كامل
+            $photo = Str::after($main_categories->photo, 'assets/'); 
+            $photoPath = public_path('assets/' . $photo);
 
             if (file_exists($photoPath)) { 
                 unlink($photoPath);
             }
-            
             $main_categories->categories()->delete();//اللي هنحذفهاcategoryلحذف الترجمات المتعلقه بال  
             $main_categories->delete();
             return redirect()->route('admin.main_categories.index')->with(['success' => 'the category deleted successfully']);
@@ -185,7 +184,7 @@ class MainCategoriesController extends Controller
             $main_categories->update(['active' => $status]);
                 return redirect()->route('admin.main_categories.index')->with(['success' => 'the status changed successfully']);
         }catch(\Exception $ex){
-            return redirect()->route('admin.main_categories.index')->with(['error' => 'deleting category failed ,please try later']);
+            return redirect()->route('admin.main_categories.index')->with(['error' => 'changing status failed ,please try later']);
         }
     }
 }

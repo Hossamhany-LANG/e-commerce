@@ -40,4 +40,13 @@ class Main_Category extends Model
     public function vendors(){
         return $this->hasMany(Vendor::class, 'category_id', 'id' );
     }
+    public function products(){
+        return $this->hasMany(Product::class, 'category_id', 'id' );
+    }
+    public function subcategories(){
+        return $this->hasMany(SubCategory::class, 'category_id', 'id' );
+    }
+    public function orderItems(){
+    return $this->hasManyThrough(OrderItem::class, Product::class, 'category_id','product_id','id', 'id'  );
+}
 }

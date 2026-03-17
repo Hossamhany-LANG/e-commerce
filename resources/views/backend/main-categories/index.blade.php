@@ -5,6 +5,14 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex">
             <h6 class="m-0 font-weight-bold text-primary">Main Categories</h6>
+            <div class="ml-auto">
+                <a href="{{route('admin.main_categories.create')}}" class="btn btn-primary">
+                <span class="icon text-white-50">
+                    <i class="fa fa-plus"></i>
+                </span>
+                <span class="text">Add New Category</span>
+                </a>
+            </div>
         </div>    
 
         <div class="table-responsive">
@@ -19,7 +27,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
                     @forelse ($main_categories as $main_category)
                     <tr>
                         <td>{{$main_category->name}}</td>
@@ -60,7 +67,7 @@
                     <tr>
                         <td colspan="6">
                             <div class="float-right">
-                                {{-- {!! $main_categories->appends(request()->all())->links()!!} --}}
+                                {!! $main_categories->appends(request()->all())->links()!!}
                             </div>
                         </td>
                     </tr>

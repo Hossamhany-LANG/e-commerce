@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255' , 'unique:users'],
-            'mobile' => ['required', 'numeric', 'unique:users'],
+            'mobile' => ['required', 'string', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -68,22 +68,21 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function register(Request $request)
-    {
-        // تفحص البيانات المرسلة عبر الطلب
-    
+    protected function create(array $data)
+    {    
         $customer = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'username' => $request->username,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'username' => $data['username'],
+            'mobile' => $data['mobile'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
             'user_image' => 'avatar.svg',
         ]);
-    
-        $customer->attachRole(Role::whereName('customer')->first()->id);
-        return redirect($this->redirectTo);
+    if ($role = Role::where('name', 'customer')->first()) {
+        $customer->roles()->attach($role->id);
+    }
+    return $customer;
     }
     
 }
